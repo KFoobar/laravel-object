@@ -1,6 +1,6 @@
 {
     "name": "kfoobar/laravel-object",
-    "description": "Object helper for PHP",
+    "description": "Laravel Object Helper",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -16,9 +16,18 @@
         "ext-json": "*",
         "illuminate/support": "^5.5|^6.0|^7.0|^8.0|^9.0|^10.0"
     },
+    "require-dev": {
+        "orchestra/testbench": "^8.11",
+        "phpunit/phpunit": "^10.1"
+    },
     "autoload": {
         "psr-4": {
             "KFoobar\\Support\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KFoobar\\Support\\Test\\": "tests/"
         }
     },
     "extra": {
