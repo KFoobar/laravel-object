@@ -2,19 +2,26 @@
 
 namespace KFoobar\Support;
 
-class Obj
+use Exception;
+
+class ObjectHelper
 {
     public function make(mixed $data)
     {
         if ($this->isArray($data)) {
-            $data = json_decode(json_encode($data), false);
+            $object = json_decode(json_encode($data), false);
         } elseif ($this->isJsonString($data)) {
-            $data = json_decode($data, false);
+            $object = json_decode($data, false);
         } elseif ($this->isStdClass($data)) {
-            $data = json_decode(json_encode($data), true);
+            $array = json_decode(json_encode($data), true);
+            $object = json_decode(json_encode($array), false);
         }
 
-        return $data;
+        if (empty($object) || !$object instanceof \stdClass) {
+            throw new Exception('Failed to convert to object!');
+        }
+
+        return $object;
     }
 
     private function isArray($data): bool

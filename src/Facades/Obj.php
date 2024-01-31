@@ -1,8 +1,9 @@
 <?php
 
-namespace KFoobar\Object\Facades;
+namespace KFoobar\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use KFoobar\Support\ObjectHelper;
 
 class Obj extends Facade
 {
@@ -13,6 +14,6 @@ class Obj extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \KFoobar\Support\Obj::class;
+        return ObjectHelper::class;
     }
 }
