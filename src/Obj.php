@@ -4,34 +4,34 @@ namespace KFoobar\Support;
 
 class Obj
 {
-    public static function make($data)
+    public function make(mixed $data)
     {
-        if (self::isArray($data)) {
+        if ($this->isArray($data)) {
             $data = json_decode(json_encode($data), false);
-        } elseif (self::isJsonString($data)) {
+        } elseif ($this->isJsonString($data)) {
             $data = json_decode($data, false);
-        } elseif (self::isStdClass($data)) {
+        } elseif ($this->isStdClass($data)) {
             $data = json_decode(json_encode($data), true);
         }
 
         return $data;
     }
 
-    private static function isArray($data)
+    private function isArray($data): bool
     {
         return is_array($data);
     }
 
-    private static function isJsonString($data)
+    private function isJsonString($data): bool
     {
         return is_string($data)
             && is_array(json_decode($data, true))
             && (json_last_error() == JSON_ERROR_NONE)
-                ? true
-                : false;
+            ? true
+            : false;
     }
 
-    private static function isStdClass($data)
+    private function isStdClass($data): bool
     {
         return ($data instanceof \stdClass)
             ? true
