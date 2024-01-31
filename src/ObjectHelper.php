@@ -6,7 +6,17 @@ use Exception;
 
 class ObjectHelper
 {
-    public function make(mixed $data)
+    /**
+     * Convert input to object.
+     *
+     * @param  mixed     $data
+     * @param  bool      $throw
+     *
+     * @throws Exception
+     *
+     * @return mixed
+     */
+    public function make(mixed $data, bool $throw = false)
     {
         if ($this->isArray($data)) {
             $object = json_decode(json_encode($data), false);
@@ -18,17 +28,35 @@ class ObjectHelper
         }
 
         if (empty($object) || !$object instanceof \stdClass) {
-            throw new Exception('Failed to convert to object!');
+            if ($throw === true) {
+                throw new Exception('Unable to transform the given input into an object.');
+            }
+
+            return null;
         }
 
         return $object;
     }
 
+    /**
+     * Determines whether the specified data is array.
+     *
+     * @param mixed $data
+     *
+     * @return bool
+     */
     private function isArray($data): bool
     {
         return is_array($data);
     }
 
+    /**
+     * Determines whether the specified data is json string.
+     *
+     * @param mixed $data
+     *
+     * @return bool
+     */
     private function isJsonString($data): bool
     {
         return is_string($data)
@@ -38,6 +66,13 @@ class ObjectHelper
             : false;
     }
 
+    /**
+     * Determines whether the specified data is standard class.
+     *
+     * @param mixed $data
+     *
+     * @return bool
+     */
     private function isStdClass($data): bool
     {
         return ($data instanceof \stdClass)
